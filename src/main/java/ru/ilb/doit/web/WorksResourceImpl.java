@@ -19,13 +19,13 @@ import io.swagger.annotations.Api;
 import java.util.List;
 import javax.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.ilb.doit.api.WorkResource;
 import ru.ilb.doit.model.Work;
 import ru.ilb.doit.repositories.WorkRepository;
+import ru.ilb.doit.api.WorksResource;
 
 @Path("works")
 @Api("works")
-public class WorksResourceImpl implements WorkResource {
+public class WorksResourceImpl implements WorksResource {
     
     @Autowired
     private WorkRepository workRepository;

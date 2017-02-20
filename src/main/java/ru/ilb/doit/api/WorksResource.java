@@ -29,7 +29,7 @@ import ru.ilb.doit.model.Work;
  * @author slavb
  */
 @Path("works")
-public interface WorkResource {
+public interface WorksResource {
     
     @GET
     @Produces({"application/xml", "application/json" })

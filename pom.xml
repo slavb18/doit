@@ -42,19 +42,19 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/ilb/jparestresource.git</connection>
-        <url>https://github.com/ilb/jparestresource</url>
+        <connection>scm:git:https://github.com/ilb/doit.git</connection>
+        <url>https://github.com/ilb/doit</url>
         <tag>HEAD</tag>
     </scm>
     <!-- use local svn 
     <scm>
-        <connection>scm:svn:https://svn.ilb.ru/repos/jparestresource/trunk</connection>
+        <connection>scm:svn:https://svn.ilb.ru/repos/doit/trunk</connection>
     </scm>
     -->
     <distributionManagement>
         <site>
             <id>docsserver</id>
-            <url>dav:https://docs.net.ilb.ru/apps/jparestresource/</url>
+            <url>dav:https://docs.net.ilb.ru/apps/doit/</url>
         </site>
         <snapshotRepository>
             <id>ossrh</id>
@@ -568,8 +568,8 @@
                                 </goals>
                                 <configuration>
                                     <classResourceNames>
-                                        <classResourceName>ru.ilb.jparestresource.web.DocumentsResourceImpl</classResourceName>
-                                        <classResourceName>ru.ilb.jparestresource.web.Heartbeat</classResourceName>
+                                        <classResourceName>ru.ilb.doit.web.WorksResourceImpl</classResourceName>
+                                        <classResourceName>ru.ilb.doit.web.Heartbeat</classResourceName>
                                     </classResourceNames>
                                     <docProvider>org.apache.cxf.maven_plugin.javatowadl.ResourceMapJavaDocProvider</docProvider>
                                     <attachWadl>true</attachWadl>
