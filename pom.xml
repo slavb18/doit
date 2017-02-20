@@ -54,7 +54,7 @@
     <distributionManagement>
         <site>
             <id>docsserver</id>
-            <url>dav:https://docs.net.ilb.ru/apps/doit/</url>
+            <url>dav:https://docs.ilb.ru/apps/doit/</url>
         </site>
         <snapshotRepository>
             <id>ossrh</id>
