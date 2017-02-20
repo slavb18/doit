@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="ru.ilb.doit.model" v="3.1" persistenceUnitName="doit" sm="false" xs="true" id="_14855761330684" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:description>test model</jpa:description>
+    <jpa:entity lbl-ref="_1487572000992791" xre="true" compositePrimaryKeyClass="BussinessEntityPK" abs="false" class="BussinessEntity" v="true" m="false" rootElement="_14855761330684" id="_1487572000992">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:des>Хозйствующий субъект</jpa:des>
+        <jpa:ath>slavb</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="login" id="_1487572277308806">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1487572028123" connected-attribute-id="_1487572094302796" v="true" name="works" id="_1487572094303797">
+                <jpa:bv/>
+            </jpa:one-to-many>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1487572000992791">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="BussinessEntity.findAll">
+            <jpa:query>Select e from BussinessEntity e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="BussinessEntity.findByLogin">
+            <jpa:query>Select b from BussinessEntity b where b.login=:login</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity lbl-ref="_1487572028123793" xre="true" compositePrimaryKeyClass="WorkPK" abs="false" class="Work" v="true" m="false" rootElement="_14855761330684" id="_1487572028123">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:des>Работа</jpa:des>
+        <jpa:ath>slavb</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="java.time.LocalDate" v="true" name="workDate" id="_1487572147985798">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigDecimal" v="true" name="price" id="_1487572170277799">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="resourceLink" id="_1487572248949805">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="Integer" v="true" name="duration" id="_14875766250079">
+                <jpa:des>Длительность</jpa:des>
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1487572000992" connected-attribute-id="_1487572094303797" v="true" name="bussinessEntity" id="_1487572094302796">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1487572191580" connected-attribute-id="_1487572208166802" v="true" name="bids" id="_1487572208167803">
+                <jpa:bv/>
+            </jpa:one-to-many>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1487572028123793">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Work.findAll">
+            <jpa:query>Select e from Work e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Work.findByWorkDate">
+            <jpa:query>Select w from Work w where w.workDate=:workDate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Work.findByPrice">
+            <jpa:query>Select w from Work w where w.price=:price</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Work.findByResourceLink">
+            <jpa:query>Select w from Work w where w.resourceLink=:resourceLink</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Work.findByDuration">
+            <jpa:query>Select w from Work w where w.duration=:duration</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity lbl-ref="_1487572191581800" xre="true" compositePrimaryKeyClass="BidPK" abs="false" class="Bid" v="true" m="false" rootElement="_14855761330684" id="_1487572191580">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:des>Ставка</jpa:des>
+        <jpa:ath>slavb</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="java.math.BigDecimal" v="true" name="price" id="_1487572216797804">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1487572028123" connected-attribute-id="_1487572208167803" v="true" name="work" id="_1487572208166802">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1487572000992" v="true" name="bussinessEntity" id="_14875766111798">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1487572191581800">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Bid.findAll">
+            <jpa:query>Select e from Bid e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Bid.findByPrice">
+            <jpa:query>Select b from Bid b where b.price=:price</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity lbl-ref="_1487572000992791" xre="false" compositePrimaryKeyClass="PrivatePersonPK" abs="false" class="PrivatePerson" superclassId="_1487572000992" v="true" m="false" rootElement="_14855761330684" id="_1487572306949">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:des>Филическое лицо</jpa:des>
+        <jpa:ath>slavb</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="PrivatePerson.findAll">
+            <jpa:query>Select e from PrivatePerson e</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+        <jpa:discriminator-value>1</jpa:discriminator-value>
+    </jpa:entity>
+    <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
+ * This file was generated by the JPA Modeler
+ */</jpa:snp>
+    <jpa:inf e="true" n="java.io.Serializable"/>
+    <jpa:c>
+        <ct>java.util.List</ct>
+        <ct>java.util.Set</ct>
+        <ct>java.util.Map</ct>
+        <ct>java.util.Collection</ct>
+    </jpa:c>
+    <jpa:diagram>
+        <plane elementRef="_14855761330684">
+            <shape elementRef="_1487572000992">
+                <Bounds x="232.0" y="253.0" width="182.0" height="129.0"/>
+            </shape>
+            <shape elementRef="_1487572028123">
+                <Bounds x="623.0" y="48.0" width="142.0" height="213.0"/>
+            </shape>
+            <shape elementRef="_1487572191580">
+                <Bounds x="840.0" y="253.0" width="142.0" height="150.0"/>
+            </shape>
+            <shape elementRef="_1487572306949">
+                <Bounds x="414.0" y="465.0" width="171.0" height="24.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="urn:ru:ilb:doit:model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="urn:ru:ilb:doit:model ../../../../../doit-api/src/main/resources/schemas/doit/model.xsd">
+    <displayName>ЯЯЯЯSubscription documents</displayName>
+    <description>Desctiption follows</description>
+    <keywords>journals</keywords>
+    <docDate>2015-01-01</docDate>
+    <direction>IN</direction>
+    <docfile>
+        <userName>testuser</userName>
+        <confirm>false</confirm>
+    </docfile>
+</document>

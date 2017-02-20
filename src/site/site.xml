@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="doit">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.6</version>
+    </skin>
+    <body>
+        <menu ref="reports" inherit="top"/>
+        <menu ref="modules"/> 
+        <menu name="Documentation">
+            <item href="application.html" name="Application resources" />
+            <item href="model.html" name="Data model" />
+            <item href="example.html" name="Markdown" />
+        </menu>    
+    </body>
+</project>
+

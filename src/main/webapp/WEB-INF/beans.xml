@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:jaxrs-client="http://cxf.apache.org/jaxrs-client"
+       xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+        http://cxf.apache.org/jaxrs-client http://cxf.apache.org/schemas/jaxrs-client.xsd
+        http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd" 
+       xmlns:aop="http://www.springframework.org/schema/aop">
+
+    <!-- Load defaults from apache cxf -->
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <!--This switches on the load-time weaving for  @Transactional (in case of mode="aspectj"), @Configurable annotated classes -->
+    <context:load-time-weaver/>
+    <!-- This switches on resolving System properties and JNDI resources in strings like ${propname} -->
+    <context:property-placeholder />
+    <!--Activates @Required, @Autowired, @PostConstruct, @PreDestroy and @Resource -->
+    <context:annotation-config/>
+    <!--Activates @Configurable -->
+    <context:spring-configured/>
+    
+    <!-- uncomment to enable @Cacheable support
+    <cache:annotation-driven mode="aspectj"/>
+    <bean id="cacheBuilder" class="com.google.common.cache.CacheBuilder" factory-method="from">
+        <constructor-arg value="maximumSize=500, expireAfterAccess=300s, expireAfterWrite=300s" />
+    </bean>
+    <bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
+        <property name="cacheBuilder" ref="cacheBuilder"/>
+    </bean>
+    -->    
+    
+    <!-- uncomment to enable AsyncTaskManager support -->
+    <!--<bean id="asyncTaskManager" class="ru.ilb.common.jaxrs.async.AsyncTaskManager" destroy-method="destroy"/>-->
+
+    <!-- uncomment to enable jdbc transaction support using JdbcTemplate -->
+    <!--
+    <tx:annotation-driven transaction-manager="transactionManager" mode="aspectj"/>
+    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/jparesresource"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    -->
+
+    <!-- Configure JPA support, comment if no JPA needed -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
+        <property name="persistenceXmlLocation" value="classpath*:META-INF/persistence.xml"></property>
+    </bean>
+    <!-- Configure JPA declarative transaction support for @Transactional annotated classes -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" mode="aspectj"/>
+    
+    <!-- Configure shared entity manager in it need to injected manually -->
+    <bean id="entityManager" class = "org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <jpa:repositories base-package="ru.ilb.doit.repositories"/>
+    <!-- uncomment to enable CORS support, see https://cwiki.apache.org/confluence/display/CXF20DOC/JAX-RS+CORS, and pom dependency -->
+    <!--<bean id="corsFilter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>-->
+
+    <!-- Configure swagger api support, see also jaxrs:features section in jaxrs:server and maven dependencies -->
+    <bean id="documentationProvider" class="org.apache.cxf.jaxrs.model.doc.JavaDocProvider">
+        <constructor-arg value="WEB-INF/lib/doit-javadoc.jar"/>
+    </bean>
+    <bean id="swagger2Serializers" class="org.apache.cxf.jaxrs.swagger.DefaultSwagger2Serializers">
+        <property name="javadocProvider" ref="documentationProvider"/>
+    </bean>
+    <bean id="swagger2Feature" class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
+        <property name="swagger2Serializers" ref="swagger2Serializers"/>
+        <property name="resourcePackage" value="ru.ilb.doit.web"/>
+        <property name="scanAllResources" value="true"/>
+        <property name="prettyPrint" value="true"/>
+    </bean>
+    <bean id="wadlGenerator" class="org.apache.cxf.jaxrs.model.wadl.WadlGenerator">
+        <property name="documentationProvider" ref="documentationProvider"/>
+    </bean>
+
+    <!-- Configure xslt support, see also web.xml for refreshTemplates env-entry
+    <bean id="uriResolver" class="ru.ilb.common.jaxrs.xml.transform.ServletContextURIResolver"/>
+    <bean id="xsltProvider" class="org.apache.cxf.jaxrs.provider.XSLTJaxbProvider" >
+        <property name="resolver" ref="uriResolver"/>
+        <property name="produceMediaTypes" value="application/xml,application/*+xml,text/xml,text/html,text/csv"/>
+        <property name="refreshTemplates">
+            <jee:jndi-lookup jndi-name="java:/comp/env/refreshTemplates" />
+        </property>
+    </bean>
+    -->
+    <bean id="searchContextProvider" class="org.apache.cxf.jaxrs.ext.search.SearchContextProvider"/>
+
+    <util:map id="namespaceMap" map-class="java.util.Hashtable">
+        <entry key="urn:ru:ilb:doit:model" value="model"/>
+    </util:map>
+    <bean id="jaxbContextResolver" class="ru.ilb.common.jaxrs.jaxb.JaxbContextResolver" >
+        <property name="contextProperties" ref="contextProperties"/>
+        <property name="extraClass" ref="extraClass"/>
+    </bean>
+
+    <!-- Both jaxbProvider and jsonProvider should be configured identically -->
+    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+        <property name="namespacePrefixes" ref="namespaceMap"/>
+        <property name="marshallerProperties" ref="marshallerProperties"/>
+        <property name="contextProperties" ref="contextProperties"/>
+        <property name="singleJaxbContext" value="true"/>
+        <!--<property name="schemaHandler" ref="schemaHandler"/>-->
+    </bean>
+    <!-- moxy json provider, default behavior -->
+    <bean id="jsonProvider" class="org.eclipse.persistence.jaxb.rs.MOXyJsonProvider">
+        <property name="formattedOutput" value="true"/>
+    </bean>
+    <!-- jackson json provider, also need to uncomment jackson-jaxrs-json-provider dependency in pom.xml
+    <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+    -->
+    <!--    <bean id="schemaHandler" class="org.apache.cxf.jaxrs.utils.schemas.SchemaHandler">
+        <property name="catalogLocation" value="classpath:schemas/doit/catalog.xml"/>
+        <property name="schemaLocations" ref="schemaLocations"/>
+    </bean>-->
+    <util:list id="schemaLocations">
+        <value>classpath:schemas/doit/model.xsd</value>
+    </util:list>
+    <util:list id="extraClass" value-type="java.lang.Class">
+    </util:list>
+
+    <util:map id="marshallerProperties">
+        <entry key="jaxb.formatted.output" value="true" value-type="java.lang.Boolean"/>
+    </util:map>
+    <util:map id="contextProperties">
+        <!--<entry key="eclipselink-oxm-xml" value="schemas/doit/model-oxm.xml"/>-->
+        <entry key="com.sun.xml.bind.XmlAccessorFactory" value="true" value-type="java.lang.Boolean"/>
+    </util:map>
+    
+    <!-- bean validation support, @Valid  annotations required, add -beanValidation flag to cxf-wadl2java-plugin 
+    and use krasa-jaxb-tools plugin with -xjc-XJsr303Annotations -->
+    <bean id="validationProvider" class="org.apache.cxf.validation.BeanValidationProvider" />
+
+    <bean id="validationInInterceptor" class="org.apache.cxf.jaxrs.validation.JAXRSBeanValidationInInterceptor">
+        <property name="provider" ref="validationProvider" />
+    </bean>
+
+    <bean id="validationOutInterceptor" class="org.apache.cxf.jaxrs.validation.JAXRSBeanValidationOutInterceptor">
+        <property name="provider" ref="validationProvider" />
+    </bean>
+
+    <bean id="validationExceptionMapper" class="org.apache.cxf.jaxrs.validation.ValidationExceptionMapper">
+        <property name="addMessageToResponse" value="true"/>
+    </bean>
+    
+    <!-- Configure param converters for jaxrs:server and jaxrs:client -->
+    <util:map id="mapParamConverters">
+        <entry key="java.util.Date" value="ru.ilb.common.jaxrs.converters.DateParamConverter" value-type=""/>
+    </util:map>
+    <bean id="mapParamConverterProvider" class="ru.ilb.common.jaxrs.providers.MapParamConverterProvider">
+        <property name="converters" ref="mapParamConverters"/>
+    </bean>
+    <!-- Provider to mail fatal errors to server admin -->
+    <bean id="exceptionHandler" class="ru.ilb.common.jaxrs.exceptionhandler.SendMailExceptionHandler">
+        <property name="mailTo" value="${SERVER_ADMIN}"/>
+    </bean>
+    
+    <!-- inbound request logging -->
+    <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    
+    <cxf:bus>
+        <cxf:properties>
+            <entry key="skip.default.json.provider.registration" value="true"/>
+        </cxf:properties>
+    </cxf:bus>
+    <bean id="authorizationHandler" class="ru.ilb.doit.providers.AuthorizationHandler">
+        <!--<property name="xremoteUsersGroup" value="ru.bystrobank.apps.doit.xremoteusers"/>-->
+    </bean>
+
+    <!-- auto register @Component annotated classes -->
+    <context:component-scan base-package="ru.ilb.doit.web,ru.ilb.doit.core,ru.ilb.doit.utils"/>
+    <jaxrs:server address="/" basePackages="ru.ilb.doit.web,ru.ilb.common.jaxrs.providers,ru.ilb.common.jaxrs.exceptionhandler">
+        <jaxrs:providers>
+            <ref bean="jaxbContextResolver"/>
+            <ref bean="jaxbProvider"/>
+            <ref bean="jsonProvider"/>
+            <ref bean="mapParamConverterProvider"/>
+            <ref bean="searchContextProvider"/>
+            <ref bean="exceptionHandler"/>
+            <ref bean="validationExceptionMapper"/>
+            <ref bean="authorizationHandler"/>
+            <ref bean="wadlGenerator"/>
+            <!-- uncomment to enable CORS support -->
+            <!--<ref bean="corsFilter" />-->
+        </jaxrs:providers>
+        <jaxrs:features>
+            <!-- swagger api support -->
+            <ref bean="swagger2Feature" />
+        </jaxrs:features>
+        <jaxrs:inInterceptors>
+            <!--uncomment to enable inbound request logging--> 
+            <ref bean="logInbound"/>
+            <ref bean="validationInInterceptor" />
+        </jaxrs:inInterceptors>
+        <jaxrs:outInterceptors>
+            <!--uncomment to enable response validation --> 
+            <!--<ref bean="validationOutInterceptor" />-->
+        </jaxrs:outInterceptors>        
+        <jaxrs:extensionMappings>
+            <entry key="xml" value="application/xml;charset=UTF-8"/>
+            <entry key="json" value="application/json;charset=UTF-8"/>
+        </jaxrs:extensionMappings>
+    </jaxrs:server>
+    <!-- playing with jpa-rs 
+    <jaxrs:server address="/persistance" basePackages="org.eclipse.persistence.jpa.rs.resources">
+        <jaxrs:providers>
+            <ref bean="jaxbContextResolver"/>
+            <ref bean="jaxbProvider"/>
+            <ref bean="jsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>    
+    -->
+    <http-conf:conduit name="*.http-conduit">
+<!--        <http-conf:tlsClientParameters>
+            <sec:keyManagers keyPassword="${javax.net.ssl.keyStorePassword}">
+                <sec:keyStore type="${javax.net.ssl.keyStoreType:JKS}" password="${javax.net.ssl.keyStorePassword}" 
+                              file="${javax.net.ssl.keyStore}"/>
+            </sec:keyManagers>
+            <sec:trustManagers>
+                <sec:keyStore type="${javax.net.ssl.trustStoreType:JKS}" file="${javax.net.ssl.trustStore}" password="${javax.net.ssl.trustStorePassword:#{null}}"/>
+            </sec:trustManagers>
+        </http-conf:tlsClientParameters>-->
+        <!-- disable chunking, not works everywhere -->
+        <http-conf:client AllowChunking="false" />
+    </http-conf:conduit>      
+    
+</beans>

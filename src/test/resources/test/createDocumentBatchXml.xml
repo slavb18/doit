@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:documents xmlns:model="urn:ru:ilb:doit:model">
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>1</model:id>
+        <model:displayName>Subscription documents</model:displayName>
+        <model:description>Desctiption follows</model:description>
+        <model:docDate>2015-01-01</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>2</model:id>
+        <model:displayName>Loan treaty</model:displayName>
+        <model:description>Some document</model:description>
+        <model:docDate>2015-04-25</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>3</model:id>
+        <model:displayName>Loan application</model:displayName>
+        <model:description>Client loan application form</model:description>
+        <model:docDate>2015-06-14</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>4</model:id>
+        <model:displayName>Drivers License</model:displayName>
+        <model:description/>
+        <model:docDate>2015-08-16</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>5</model:id>
+        <model:displayName>ID Card</model:displayName>
+        <model:description/>
+        <model:docDate>2015-02-01</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>6</model:id>
+        <model:displayName>Passport</model:displayName>
+        <model:description/>
+        <model:docDate>2015-10-06</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>7</model:id>
+        <model:displayName>Loan checks</model:displayName>
+        <model:description>Check results</model:description>
+        <model:docDate>2015-04-25</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>9</model:id>
+        <model:displayName>Questionnaire</model:displayName>
+        <model:description>Client questionnaire</model:description>
+        <model:docDate>2015-01-10</model:docDate>
+    </model:document>
+    <model:document xmlns:model="urn:ru:ilb:doit:model">
+        <model:id>10</model:id>
+        <model:displayName>Subscription documents</model:displayName>
+        <model:description>Desctiption follows</model:description>
+        <model:docDate>2015-01-01</model:docDate>
+    </model:document>
+</model:documents>
