@@ -9,9 +9,9 @@
         <menu ref="reports" inherit="top"/>
         <menu ref="modules"/> 
         <menu name="Documentation">
-            <item href="application.html" name="Application resources" />
-            <item href="model.html" name="Data model" />
-            <item href="example.html" name="Markdown" />
+            <item href="application.html" name="Ресурсы приложения" />
+            <item href="model.html" name="Модель данных" />
+            <item href="usecases.html" name="Прецеденты" />
         </menu>    
     </body>
 </project>
