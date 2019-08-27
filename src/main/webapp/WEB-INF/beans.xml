@@ -24,7 +24,7 @@
         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
-        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd" 
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
        xmlns:aop="http://www.springframework.org/schema/aop">
 
     <!-- Load defaults from apache cxf -->
@@ -37,7 +37,7 @@
     <context:annotation-config/>
     <!--Activates @Configurable -->
     <context:spring-configured/>
-    
+
     <!-- uncomment to enable @Cacheable support
     <cache:annotation-driven mode="aspectj"/>
     <bean id="cacheBuilder" class="com.google.common.cache.CacheBuilder" factory-method="from">
@@ -46,8 +46,8 @@
     <bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
         <property name="cacheBuilder" ref="cacheBuilder"/>
     </bean>
-    -->    
-    
+    -->
+
     <!-- uncomment to enable AsyncTaskManager support -->
     <!--<bean id="asyncTaskManager" class="ru.ilb.common.jaxrs.async.AsyncTaskManager" destroy-method="destroy"/>-->
 
@@ -69,7 +69,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" mode="aspectj"/>
-    
+
     <!-- Configure shared entity manager in it need to injected manually -->
     <bean id="entityManager" class = "org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
@@ -147,8 +147,8 @@
         <!--<entry key="eclipselink-oxm-xml" value="schemas/doit/model-oxm.xml"/>-->
         <entry key="com.sun.xml.bind.XmlAccessorFactory" value="true" value-type="java.lang.Boolean"/>
     </util:map>
-    
-    <!-- bean validation support, @Valid  annotations required, add -beanValidation flag to cxf-wadl2java-plugin 
+
+    <!-- bean validation support, @Valid  annotations required, add -beanValidation flag to cxf-wadl2java-plugin
     and use krasa-jaxb-tools plugin with -xjc-XJsr303Annotations -->
     <bean id="validationProvider" class="org.apache.cxf.validation.BeanValidationProvider" />
 
@@ -163,7 +163,7 @@
     <bean id="validationExceptionMapper" class="org.apache.cxf.jaxrs.validation.ValidationExceptionMapper">
         <property name="addMessageToResponse" value="true"/>
     </bean>
-    
+
     <!-- Configure param converters for jaxrs:server and jaxrs:client -->
     <util:map id="mapParamConverters">
         <entry key="java.util.Date" value="ru.ilb.common.jaxrs.converters.DateParamConverter" value-type=""/>
@@ -175,10 +175,10 @@
     <bean id="exceptionHandler" class="ru.ilb.common.jaxrs.exceptionhandler.SendMailExceptionHandler">
         <property name="mailTo" value="${SERVER_ADMIN}"/>
     </bean>
-    
+
     <!-- inbound request logging -->
     <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
-    
+
     <cxf:bus>
         <cxf:properties>
             <entry key="skip.default.json.provider.registration" value="true"/>
@@ -209,32 +209,32 @@
             <ref bean="swagger2Feature" />
         </jaxrs:features>
         <jaxrs:inInterceptors>
-            <!--uncomment to enable inbound request logging--> 
+            <!--uncomment to enable inbound request logging-->
             <ref bean="logInbound"/>
             <ref bean="validationInInterceptor" />
         </jaxrs:inInterceptors>
         <jaxrs:outInterceptors>
-            <!--uncomment to enable response validation --> 
+            <!--uncomment to enable response validation -->
             <!--<ref bean="validationOutInterceptor" />-->
-        </jaxrs:outInterceptors>        
+        </jaxrs:outInterceptors>
         <jaxrs:extensionMappings>
             <entry key="xml" value="application/xml;charset=UTF-8"/>
             <entry key="json" value="application/json;charset=UTF-8"/>
         </jaxrs:extensionMappings>
     </jaxrs:server>
-    <!-- playing with jpa-rs 
+    <!-- playing with jpa-rs
     <jaxrs:server address="/persistance" basePackages="org.eclipse.persistence.jpa.rs.resources">
         <jaxrs:providers>
             <ref bean="jaxbContextResolver"/>
             <ref bean="jaxbProvider"/>
             <ref bean="jsonProvider"/>
         </jaxrs:providers>
-    </jaxrs:server>    
+    </jaxrs:server>
     -->
     <http-conf:conduit name="*.http-conduit">
-<!--        <http-conf:tlsClientParameters>
+        <!--        <http-conf:tlsClientParameters>
             <sec:keyManagers keyPassword="${javax.net.ssl.keyStorePassword}">
-                <sec:keyStore type="${javax.net.ssl.keyStoreType:JKS}" password="${javax.net.ssl.keyStorePassword}" 
+                <sec:keyStore type="${javax.net.ssl.keyStoreType:JKS}" password="${javax.net.ssl.keyStorePassword}"
                               file="${javax.net.ssl.keyStore}"/>
             </sec:keyManagers>
             <sec:trustManagers>
@@ -243,6 +243,6 @@
         </http-conf:tlsClientParameters>-->
         <!-- disable chunking, not works everywhere -->
         <http-conf:client AllowChunking="false" />
-    </http-conf:conduit>      
-    
+    </http-conf:conduit>
+
 </beans>

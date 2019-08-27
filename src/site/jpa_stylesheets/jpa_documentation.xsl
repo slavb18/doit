@@ -7,7 +7,7 @@
 
 -->
 
-<xsl:stylesheet 
+<xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:html="http://www.w3.org/1999/xhtml"
@@ -19,19 +19,19 @@
     exclude-result-prefixes="xsl xs html ns jpa"
 >
     <xsl:import href="markdown.xsl"/>
-    <xsl:output 
-        method="html" 
-        encoding="UTF-8" 
+    <xsl:output
+        method="html"
+        encoding="UTF-8"
         indent="yes"
         doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
         doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     />
     <xsl:param name="model_image"/>
-    
+
 
     <!-- main template -->
-        
-    <xsl:template match="/jpa:entity-mappings">   
+
+    <xsl:template match="/jpa:entity-mappings">
         <html>
             <head>
                 <title>
@@ -40,7 +40,7 @@
                             <xsl:value-of select="jpa:description"/>
                         </xsl:when>
                         <xsl:otherwise>My Model</xsl:otherwise>
-                    </xsl:choose>                 
+                    </xsl:choose>
                 </title>
                 <meta charset="utf-8"/>
                 <style type="text/css"><![CDATA[
@@ -116,7 +116,7 @@
                             location = location.hash;
                         }
                     }
-                ]]></script>                
+                ]]></script>
             </head>
             <body>
                 <h1>
@@ -137,7 +137,7 @@
                 </xsl:if>
                 <xsl:apply-templates select="jpa:entity" mode="list">
                     <xsl:with-param name="package" select="$package"/>
-                </xsl:apply-templates>                    
+                </xsl:apply-templates>
             </body>
         </html>
     </xsl:template>
@@ -151,18 +151,18 @@
         <xsl:variable name="name">
             <xsl:call-template name="get-entity-name"/>
         </xsl:variable>
-        
+
         <li>
             <a href="#{$ref}">
                 <xsl:value-of select="$name"/>
             </a>
         </li>
-        
+
     </xsl:template>
 
 
     <!-- Listings -->
-    
+
     <xsl:template match="jpa:entity" mode="list">
         <xsl:param name="package"/>
         <xsl:variable name="ref">
@@ -177,7 +177,7 @@
             </h3>
             <p>URN: <xsl:value-of select="concat($package,'.',@class)"/></p>
             <xsl:if test="@superclassId">
-                
+
             </xsl:if>
             <p>
                 <xsl:call-template name="get-entity-description"/>
@@ -193,9 +193,9 @@
 
             </table>
         </div>
-        
+
     </xsl:template>
-    
+
     <xsl:template match="jpa:basic|jpa:id" mode="attributes">
         <tr>
             <td>
@@ -211,19 +211,19 @@
             </td>
             <td>
                 <xsl:value-of select="jpa:des"/>
-            </td>            
+            </td>
         </tr>
-        
+
     </xsl:template>
     <xsl:template match="jpa:many-to-one" mode="attributes">
-            <xsl:if test="@optional='false' and not (jpa:join-column/@nullable='false')">
-                <xsl:message terminate="no">
-                    <xsl:value-of select="concat('Warning: ', ancestor-or-self::jpa:entity/@class, '.',@name,' is not optional, but join column is nullable')"/>
-                </xsl:message>
+        <xsl:if test="@optional='false' and not (jpa:join-column/@nullable='false')">
+            <xsl:message terminate="no">
+                <xsl:value-of select="concat('Warning: ', ancestor-or-self::jpa:entity/@class, '.',@name,' is not optional, but join column is nullable')"/>
+            </xsl:message>
 
-                
-            </xsl:if>
-        
+
+        </xsl:if>
+
         <tr>
             <td>
                 <xsl:value-of select="@name"/>
@@ -234,14 +234,14 @@
                 </xsl:call-template>
             </td>
             <td>
-                
+
             </td>
             <td>
                 <xsl:value-of select="jpa:des"/>
             </td>
         </tr>
     </xsl:template>
-            
+
     <!-- utilities -->
     <xsl:template name="get-entity-link">
         <xsl:param name="id"/>
@@ -311,28 +311,28 @@
                 <xsl:apply-templates select="*|text()" mode="encode" xml:space="preserve"/>
                 <xsl:text>&lt;/</xsl:text>
                 <xsl:value-of select="name()"/>
-                <xsl:text>&gt;</xsl:text>                
+                <xsl:text>&gt;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>/&gt;</xsl:text>
             </xsl:otherwise>
-        </xsl:choose>    
-    </xsl:template>            
-    
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template match="@*" mode="encode">
         <xsl:text> </xsl:text>
         <xsl:value-of select="name()"/>
         <xsl:text>="</xsl:text>
         <xsl:value-of select="."/>
         <xsl:text>"</xsl:text>
-    </xsl:template>    
-    
+    </xsl:template>
+
     <xsl:template match="text()" mode="encode">
         <xsl:value-of select="." xml:space="preserve"/>
-    </xsl:template>    
+    </xsl:template>
 
     <!-- copy HTML for display -->
-    
+
     <xsl:template match="html:*" mode="copy">
         <!-- remove the prefix on HTML elements -->
         <xsl:element name="{local-name()}">
@@ -344,12 +344,12 @@
             <xsl:apply-templates select="node()" mode="copy"/>
         </xsl:element>
     </xsl:template>
-    
+
     <xsl:template match="@*|node()[namespace-uri()!='http://www.w3.org/1999/xhtml']" mode="copy">
         <!-- everything else goes straight through -->
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="copy"/>
         </xsl:copy>
-    </xsl:template>    
+    </xsl:template>
 
 </xsl:stylesheet>

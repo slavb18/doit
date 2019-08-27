@@ -26,7 +26,7 @@ import ru.ilb.doit.api.WorksResource;
 @Path("works")
 @Api("works")
 public class WorksResourceImpl implements WorksResource {
-    
+
     @Autowired
     private WorkRepository workRepository;
 
@@ -39,5 +39,5 @@ public class WorksResourceImpl implements WorksResource {
     public long create(Work work) {
         return workRepository.save(work).getId();
     }
-    
+
 }

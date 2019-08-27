@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/doit">
-  <!-- TomcatInstrumentableClassLoader is not intended to work on Tomcat 8.0+, but required in older versions.
-    In case of exception javax.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread 
+    <!-- TomcatInstrumentableClassLoader is not intended to work on Tomcat 8.0+, but required in older versions.
+    In case of exception javax.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread
     uncomment this line and place spring-instrument-tomcat-4.3.2.RELEASE.jar in ${catalina.base}/lib
     -->
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" logAbandoned="true" maxWaitMillis="20000" name="jdbc/doit" password="doit" removeAbandonedOnBorrow="true" removeAbandonedTimeout="100" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/doit?autoReconnect=true&amp;elideSetAutoCommits=true&amp;useLocalSessionState=true&amp;maintainTimeStats=false&amp;serverTimezone=Europe/Moscow&amp;rewriteBatchedStatements=true" username="doit" validationQuery="SELECT 1"/>
+    <Resource
+        auth="Container"
+        driverClassName="com.mysql.jdbc.Driver"
+        logAbandoned="true"
+        maxWaitMillis="20000"
+        name="jdbc/doit"
+        password="doit"
+        removeAbandonedOnBorrow="true"
+        removeAbandonedTimeout="100"
+        type="javax.sql.DataSource"
+        url="jdbc:mysql://localhost:3306/doit?autoReconnect=true&amp;elideSetAutoCommits=true&amp;useLocalSessionState=true&amp;maintainTimeStats=false&amp;serverTimezone=Europe/Moscow&amp;rewriteBatchedStatements=true"
+        username="doit"
+        validationQuery="SELECT 1"/>
 </Context>

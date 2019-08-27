@@ -46,8 +46,7 @@ public class JaxbHelper {
      * unmarshalls object instance
      *
      * @param <T>
-     * @param source example from String: new StreamSource(new
-     * java.io.StringReader(string)), from InputStream: new StreamSource(is)
+     * @param source example from String: new StreamSource(new java.io.StringReader(string)), from InputStream: new StreamSource(is)
      * @param type
      * @param mediaType
      * @return
@@ -72,8 +71,7 @@ public class JaxbHelper {
      * unmarshalls list of object instances
      *
      * @param <T>
-     * @param source example from String: new StreamSource(new
-     * java.io.StringReader(string)), from InputStream: new StreamSource(is)
+     * @param source example from String: new StreamSource(new java.io.StringReader(string)), from InputStream: new StreamSource(is)
      * @param type
      * @param mediaType
      * @return
@@ -85,9 +83,9 @@ public class JaxbHelper {
             List<T> result = new ArrayList();
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             unmarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE, mediaType);
-            Collection tmp = (Collection) unmarshaller.unmarshal(source, type).getValue();  
-            for(Object element : tmp) {
-                result.add((T)JAXBIntrospector.getValue(element));
+            Collection tmp = (Collection) unmarshaller.unmarshal(source, type).getValue();
+            for (Object element : tmp) {
+                result.add((T) JAXBIntrospector.getValue(element));
             }
             return result;
 

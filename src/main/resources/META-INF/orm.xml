@@ -8,6 +8,6 @@
                 <!--<entity-listener class="ru.ilb.doit.listeners.AuditableListener" />-->
             </entity-listeners>
         </persistence-unit-defaults>
-    </persistence-unit-metadata>      
+    </persistence-unit-metadata>
     <converter class="ru.ilb.common.jpa.converters.UUIDConverterBytes" auto-apply="true"/>
 </entity-mappings>

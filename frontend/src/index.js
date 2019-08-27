@@ -11,17 +11,17 @@ import './index.css';
 
 
 const history = useRouterHistory(createHistory)({
-  basename: process.env.PUBLIC_URL,
- });
+    basename: process.env.PUBLIC_URL,
+});
 
 ReactDOM.render((
-  <Router history={history}>
-    <Route path="/" component={App}>
-      <Route path="documents" component={FiltrableDocumentsTable} />
-      <Route path="documents/:documentId" component={DocumentForm} />
-    </Route>
+        <Router history={history}>
+            <Route path="/" component={App}>
+                <Route path="documents" component={FiltrableDocumentsTable} />
+                <Route path="documents/:documentId" component={DocumentForm} />
+            </Route>
 
-  </Router>
-),
-  document.getElementById('root')
-);
+        </Router>
+        ),
+        document.getElementById('root')
+        );

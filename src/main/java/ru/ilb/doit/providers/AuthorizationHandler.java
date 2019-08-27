@@ -36,8 +36,6 @@ public class AuthorizationHandler implements ContainerRequestFilter {
         this.xremoteUsersGroup = xremoteUsersGroup;
     }
 
-
-
     public String getCurrentAuditor() {
         return (String) currentAuditor.get();
     }
@@ -46,7 +44,7 @@ public class AuthorizationHandler implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         SecurityContext securityContext = requestContext.getSecurityContext();
         String userName = securityContext.getUserPrincipal().getName();
-        if (xremoteUsersGroup!=null && securityContext.isUserInRole(xremoteUsersGroup)) {
+        if (xremoteUsersGroup != null && securityContext.isUserInRole(xremoteUsersGroup)) {
             String xremoteUserName = requestContext.getHeaderString("X-Remote-User");
             if (xremoteUserName != null) {
                 userName = xremoteUserName;

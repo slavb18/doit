@@ -7,12 +7,12 @@
     </skin>
     <body>
         <menu ref="reports" inherit="top"/>
-        <menu ref="modules"/> 
+        <menu ref="modules"/>
         <menu name="Documentation">
             <item href="application.html" name="Ресурсы приложения" />
             <item href="model.html" name="Модель данных" />
             <item href="usecases.html" name="Прецеденты" />
-        </menu>    
+        </menu>
     </body>
 </project>
 

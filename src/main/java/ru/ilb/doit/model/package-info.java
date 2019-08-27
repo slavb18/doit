@@ -11,6 +11,7 @@
     @XmlSchemaType(name = "dateTime", type = LocalDateTime.class)
 })
 package ru.ilb.doit.model;
+
 import com.migesok.jaxb.adapter.javatime.LocalDateTimeXmlAdapter;
 import com.migesok.jaxb.adapter.javatime.LocalDateXmlAdapter;
 import com.migesok.jaxb.adapter.javatime.LocalTimeXmlAdapter;
@@ -24,4 +25,3 @@ import javax.xml.bind.annotation.XmlSchemaTypes;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
 import ru.ilb.common.jpa.jaxb.LazyAccessorFactoryImpl;
-

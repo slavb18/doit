@@ -30,15 +30,15 @@ import ru.ilb.doit.model.Work;
  */
 @Path("works")
 public interface WorksResource {
-    
+
     @GET
-    @Produces({"application/xml", "application/json" })
+    @Produces({"application/xml", "application/json"})
     @Valid
     List<Work> list();
-    
+
     @POST
-    @Consumes({"application/xml", "application/json" })
+    @Consumes({"application/xml", "application/json"})
     @Produces("text/plain")
     long create(@Valid Work work);
-    
+
 }

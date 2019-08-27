@@ -25,7 +25,6 @@ import ru.ilb.doit.model.Work;
  * @author slavb
  */
 @Transactional
-public interface WorkRepository extends JpaRepository<Work,Long> { 
-    
-    
+public interface WorkRepository extends JpaRepository<Work, Long> {
+
 }
