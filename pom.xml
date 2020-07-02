@@ -19,7 +19,7 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <ilb-common.version>1.11</ilb-common.version>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <mysql-connector.version>5.1.31</mysql-connector.version>
+        <mysql-connector.version>8.0.16</mysql-connector.version>
         <eclipselink.version>2.6.4</eclipselink.version>
         <javax-persistence.version>2.1.0</javax-persistence.version>
         <org.springframework.version>4.3.3.RELEASE</org.springframework.version>
